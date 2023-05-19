@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+    
+{% endblock %}
+
+{% block currentstep %}
+    Instrument toevoegen of wijzigen
+{% endblock %}
+
+{% block body %}
+    Voor de opmaak van de tekst zijn de volgende HTML-tags toegestaan: 'a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'code', 'em', 'i', 'li', 'ol', 'strong', 'ul'
+    <br><br>
+    <form method="POST">
+        {{form.naam.label}}<br>{{form.naam(size='100%')}}<br><br>
+        {{form.intro.label}}<br>{{form.intro(class='text_field')}}<br><br>
+        {{form.beschrijving.label}}<br>{{form.beschrijving(class='text_field')}}<br><br>
+        {{form.afwegingen.label}}<br>{{form.afwegingen(class='text_field')}}<br><br>
+        {{form.voorbeelden.label}}<br>{{form.voorbeelden(class='text_field')}}<br><br>
+        {{form.links.label}}<br>{{form.links(class='text_field')}}<br><br>
+        {{form.eigenaar.label}}<br>{{form.eigenaar(size='100%')}}<br><br>
+        {{form.eigenaar_email.label}}<br>{{form.eigenaar_email(size='100%')}}<br><br>
+        {{form.submit}}
+
+    </form>
+{% endblock %}  
+

@@ -1,0 +1,8 @@
+interventie.db
+config.py
+interventie_docker.tar
+interventie_prod.tar
+temp.docx
+archive/
+venv/
+notes.txt/

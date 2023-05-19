@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% set active_page = "instrumenten_summary" %}
+
+{% block currentcase %}
+    
+{% endblock %}
+
+{% block currentstep %}
+Catalogus van interventieinstrumenten
+{% endblock %}
+
+{% block instrumenten %}
+
+    {% if current_user.role == 1 %}
+        <a href="{{ url_for('add_instrument') }}" class="instrument">+ Instrument toevoegen</a>
+    {% endif %}
+    <a href="{{ url_for('export_all_instruments') }}"" class="instrument">Exporteer catalogus naar Word</a>
+    
+{% endblock %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>Instrument</th>
+            <th>Beschrijving</th>
+        </tr>
+        {% for instrument in instrumenten %}
+            <tr>
+                <td valign=top>
+                    <div class='tooltip'>
+                        <a href="{{ url_for('instrument', id=instrument.id ) }}">{{ instrument.naam }}</a>
+                        <span class="tooltiptext">
+                            {% for tag in instrument.tags %}
+                                <span class="tag plus">{{ tag.naam }}</span>
+                            {% endfor %}
+                            {% for tag in instrument.extags %}
+                                <span class="tag min">{{ tag.naam }}</span>
+                            {% endfor %}
+                            <br>
+                        <span>
+                    </div><br>
+                </td>
+                <td>
+                    {{ instrument.intro }}<br>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}  
+

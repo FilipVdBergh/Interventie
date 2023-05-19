@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% set active_page = "final" %}
+
+{% block currentcase %}
+    Casus {{ werksessie.naam }}
+{% endblock %}
+
+{% block currentstep %}
+    Overwegingen definitieve instrumentselectie
+{% endblock %}
+
+
+{% block instrumenten %}
+    {% for instrument in instrumenten %}
+        <div class="instrument">
+            <div class="tooltip">
+                <a href="{{ url_for('instrument', id=instrument[0].id ) }}" class="instrument {% if instrument[6] == 2 %}prio_hi{% elif instrument[6] == 1 %}prio_mid{% else %}prio_lo{% endif %}">
+                    {{ instrument[0].naam }}
+                </a>
+                <span class="tooltiptext">
+                    Tag hits:<br>
+                    {% for tag in instrument[2] %}
+                    <span class="tag plus">
+                        {{ tag.naam }}
+                    </span>
+                    {% endfor %}
+                    {% for tag in instrument[4] %}
+                    <span class="tag min">
+                        {{ tag.naam }}
+                    </span>
+                    {% endfor %}
+                    <br>Gewogen score: {{ instrument[5] }} 
+                <span>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block body %}  
+        <form method="POST">      
+            De export van de werksessie biedt aanknopingspunten voor een plan van aanpak. 
+            Beschrijf hieronder welke instrumenten relevant zijn voor deze casus en welke
+            overwegingen daarbij een rol spelen. Ook kan besloten worden niets te doen.
+            De aanpak kan gebaseerd zijn op de instrumenten die door de keuzehulp zijn
+            geprioriteerd, maar dat is niet noodzakelijk.
+            
+            {{form.conclusie(class='text_field')}}
+            <br>{{form.submit}}
+        </form>
+
+{% endblock %}  
+

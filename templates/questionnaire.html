@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% set active_page = "questionnaire" %}
+
+{% block currentcase %}
+    Casus {{ werksessie.naam }}
+{% endblock %}
+
+{% block currentstep %}
+    Keuzehulp
+{% endblock %}
+
+{% block instrumenten %}
+    {% if werksessie.showinstruments == 1 %}
+        {% for instrument in instrumenten %}
+            <div class="instrument">
+                <div class="tooltip">
+                    <a href="{{ url_for('instrument', id=instrument[0].id ) }}" class="instrument {% if instrument[6] == 2 %}prio_hi{% elif instrument[6] == 1 %}prio_mid{% else %}prio_lo{% endif %}">
+                        {{ instrument[0].naam }}
+                    </a>
+                    <span class="tooltiptext">
+                        Tag hits:<br>
+                        {% for tag in instrument[2] %}
+                        <span class="tag plus">
+                            {{ tag.naam }}
+                        </span>
+                        {% endfor %}
+                        {% for tag in instrument[4] %}
+                        <span class="tag min">
+                            {{ tag.naam }}
+                        </span>
+                        {% endfor %}
+                        <br>Gewogen score: {{ instrument[5] }} 
+                    <span>
+                </div>
+            </div>
+        {% endfor %}
+        <h1>Actieve tags</h1>
+        {% for optie in werksessie.geselecteerde_opties %}
+            {% for tag in optie.tags %}
+                <span class="tag">{{ tag.naam }}</span>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    <br><br>
+        {% if werksessie.showinstruments %}
+            <a href="{{ url_for('toggle_showinstruments', werksessie_id=werksessie.id, enabled=0) }}" class="instrument">&#9673; Instrumenten tonen</a>
+        {% else %}
+            <a href="{{ url_for('toggle_showinstruments', werksessie_id=werksessie.id, enabled=1) }}" class="instrument">&#9678; Instrumenten tonen</a>
+        {% endif %}
+{% endblock %}
+
+
+{% block body %}
+    <b>{{ werksessie.probleemstelling }}</b>
+        {% for categorie in categorieen %}
+            <h1 class="first">{{ categorie.naam }}</h1>
+            {% for vraag in categorie.vragen %}
+                <button type="button" class="collapsible question">
+                    <h2 style='display:inline'><a name="{{ vraag.id }}">{{ vraag.naam }}</a>
+                        {% for motivatie in werksessie.motivaties %}
+                            {% if motivatie.vraag == vraag.id %}
+                                {% if motivatie.motivatie != "" %}
+                                    *
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </h2>
+                    {% for optie in vraag.opties %}
+                        {% if optie in werksessie.geselecteerde_opties %}<span class="answer">{{ optie.naam }} <a href="{{ url_for('remove_option_from_questionnaire', optie_id=optie.id) }}">&#10060;</a></span>{% endif %}
+                    {% endfor %}
+                </button>               
+                <div class="collapsible_content question">
+                    <form method="post">
+                        <input type="hidden" name="vraag" value="{{ vraag.id }}">
+                        {% if vraag.multiselect %}Vink aan:<br>{% endif %}
+                        {% for optie in vraag.opties %}
+                            {% if vraag.multiselect %}                  
+                                <input type="checkbox" id="True" name="optie" value="{{ optie.id }}" {% if optie in werksessie.geselecteerde_opties %}checked{% endif %}>
+                            {% else %}
+                                <input type="radio" id="True" name="optie" value="{{ optie.id }}" {% if optie in werksessie.geselecteerde_opties %}checked{% endif %}>
+                            {% endif %}
+                            {{ optie.naam }}
+                            <br>
+                        {% endfor %}
+                        Motivatie:<br>
+                        <textarea id="{{ vraag.id }}" name="motivatie" class="text_field">{% for motivatie in werksessie.motivaties %}{% if motivatie.vraag == vraag.id %}{{ motivatie.motivatie }}{% endif %}{% endfor %}</textarea>
+                        <br><input type="submit" value="Opslaan"><br><br>
+                    </form>
+                </div>
+            {% endfor %}  
+        {% endfor %}
+{% endblock %}  
+

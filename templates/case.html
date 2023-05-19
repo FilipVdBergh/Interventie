@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% set active_page = "case" %}
+
+{% block currentcase %}
+    Casus {{ werksessie.naam }}
+{% endblock %}
+
+{% block currentstep %}
+    Informatie over de casus
+{% endblock %}
+
+
+{% block instrumenten %}
+<h1 class="first">Werksessies</h1>
+    {% if current_user.is_authenticated %} 
+            {% for ws in werksessies %}
+                {% if current_user.id == ws.owner %}
+                    <div class="tooltip">
+                            <a href="{{ url_for('activate_session', sessie_id = ws.id) }}" 
+                                {% if ws.id == actieve_werksessie %}
+                                    class='werksessie owned_by_me active_session'
+                                {% endif %}
+                                class='werksessie owned_by_me'>
+                                {{ ws.naam }}
+                            </a>              
+                        <span class="tooltiptext">
+                            <strong>U bent de eigenaar</strong><br>
+                            {{ ws.probleemstelling }}<br>
+                            Deelnemers: {{ ws.auteurs }}<br>
+                            Datum: {{ ws.datum }}
+                        <span>
+                    </div>
+                {% endif %}
+            {% endfor %}    
+            {% for ws in werksessies %}
+                {% if current_user.id != ws.owner %}
+                    <div class='tooltip'>
+                            <a href="{{ url_for('activate_session', sessie_id = ws.id) }}" 
+                                {% if ws.id == actieve_werksessie %}
+                                    class="werksessie owned_by_other active_session"
+                                {% else %}
+                                    class="werksessie owned_by_other"
+                                {% endif %}
+                                >
+                                {{ ws.naam }}
+                            </a>   
+                        <span class="tooltiptext">
+                            {{ ws.probleemstelling }}<br>
+                            Deelnemers: {{ ws.auteurs }}<br>
+                            Datum: {{ ws.datum }}
+                        <span>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        <a href="{{ url_for('add_session') }}" class="instrument">+ Werksessie toevoegen</a>
+        {% endif %}  
+{% endblock %}
+
+{% block body %}  
+        <form method="POST">
+            {{ form.csrf_token }}
+            <h1 class="first">Naam</h1>
+            {{form.naam(class='text_input')}}
+            <br>{{form.submit}}
+            <h1>{{form.auteurs.label}}</h1>
+            {{form.auteurs(class='text_field')}}
+            <br>{{form.submit}}
+            <h1>{{form.datum.label}}</h1>
+            {{form.datum(class='text_input')}}
+            <br>{{form.submit}}
+            <h1>Beoogd effect</h1>
+            Stel bij de start van de werksessie met alle deelnemers vast wat het doel is dat je met je interventie 
+            wilt bereiken en bij welke doelgroep. Welk gedrag is onwenselijk en moet gestopt of verminderd worden?
+            Of: welk gedrag moet gestart of voortgezet worden?
+            {{form.probleemstelling(class='text_field')}}
+            <br>{{form.submit}}
+        </form>
+        {% if (current_user.id == werksessie.owner) or (current_user.role == 1) %}
+            <h1>Acties</h1>
+                <ul>
+                    <li><a href="#" onclick="verwijder();return false">Verwijder werksessie</a></li>
+                </ul>
+                
+                <script>
+                    function verwijder() {
+                        if (confirm("Werksessie verwijderen?")) { window.location.href = "{{ url_for('delete_session', sessie_id = werksessie.id) }}" } 
+                    }
+                </script>
+
+
+        {% endif %}
+
+{% endblock %}  
+

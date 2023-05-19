@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+
+{% endblock %}
+
+{% block currentstep %}
+    Tags van antwoordoptie "{{ optie.naam }}" wijzigen
+{% endblock %}
+
+
+{% block instrumenten %}
+    <a href="{{ url_for('tags') }}" class="instrument">+ Nieuwe tag toevoegen aan database</a>
+{% endblock %}
+
+{% block body %}
+    <h2>Geselecteerde tags</h2>
+    {% for tag in optie.tags %}
+        <span class="tag">{{ tag.naam }}</span>
+    {% endfor %}
+    <h2>Beschikbare tags</h2>
+    <table>
+        <tr>
+            <th>Tag</th>
+            <th>Status</th>
+        </tr>
+        {% for tag in tags %}
+        <tr>
+            <td><span class="tag">{{ tag[1] }}</span></td>
+            <td>
+                {% if not tag[2] %}<a href="/question/{{ vraag.id }}/option/{{ optie.id }}/add_tag/{{ tag[0] }}" class="switched off">inactief</a>{% endif %}
+                {% if tag[2] %}<a href="/question/{{ vraag.id }}/option/{{ optie.id }}/delete_tag/{{ tag[0] }}" class="switched on">actief</a>{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br><button onclick="location.href='/question/{{ vraag.id }}'" type="button">Terug naar antwoordopties</button>
+    
+
+{% endblock %}  
+

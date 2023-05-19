@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="URF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+        <title>Interventie</title>
+    </head>
+    <body>
+
+        <div class="divnav">
+            <a href="{{ url_for('checkout') }}" class="nav">{% block currentcase %}{% endblock %}&nbsp</span></a>
+            <span style="float:right">
+                <a href="{{ url_for('instrumenten_summary') }}" class="nav">&#128366; Catalogus</a>
+                {% if current_user.role == 1 %}
+                    <a href="{{ url_for('question_tools') }}" class="nav">&#9881; Aanpassen</a>
+                    <a href="{{ url_for('info') }}" class="nav">App info</a>
+                {% endif %}
+                <a href='mailto:interventie@afm.nl' class="nav">&#9993; Contact</a>
+                {% if current_user.is_authenticated == True %}
+                    <a href="{{ url_for('account') }}" class="nav">{{ current_user.username }} &#9662;</a>
+                {% else %}               
+                    <a href="{{ url_for('login') }}" class="nav">Login</a>
+                {% endif %}
+            </span>
+            
+
+
+        </div>
+        <div class="divtoolbar">
+            <div class="divlogo">
+                <img src="{{url_for('static', filename='PMAT logo stap 3.png')}}" height='75px'>
+            </div>
+            <div class="divcurrentstep">
+                {% block currentstep %}{% endblock %}
+            </div>
+            <div class="divsteps">
+                {% if current_user.is_authenticated == True %}
+                    <a href="{{ url_for('intro') }}" class="step {% if active_page =='intro' %} current{% endif %}">Start</a>
+                    <a href="{{ url_for('case') }}" class="step {% if active_page =='case' %} current{% endif %}">1: Casus</a>
+                    <a href="{{ url_for('questionnaire') }}" class="step {% if active_page =='questionnaire' %} current{% endif %}">2: Keuzehulp</a>
+                    <a href="{{ url_for('final') }}" class="step {% if active_page =='final' %} current{% endif %}">3: Conclusie</a>
+                    <a href="{{ url_for('checkout') }}" class="step {% if active_page =='export' %} current{% endif %}">Samenvatting</a>                    
+                {% endif %}
+            </div>
+            
+        </div>
+        <div class="divmain">
+            
+            <div class="divinstrumenten">
+                {% block instrumenten %}   
+                {% endblock %} 
+            </div>
+
+            <div class="divworkarea">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+
+        <script nonce="{{ nonce }}">
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+            
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                content.style.maxHeight = null;
+                } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+            }
+        </script>
+
+    </body>
+</html>

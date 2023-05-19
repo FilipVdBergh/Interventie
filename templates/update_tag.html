@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+{% endblock %}
+
+{% block currentstep %}
+    Tagnaam wijzigen
+{% endblock %}
+
+{% block instrumenten %}
+{% endblock %}
+
+{% block body %}
+    <form action="/tag_update/{{ tag.id }}" method="POST">
+        <input type="text" name="Tag" id="naam" value="{{ tag.naam }}">
+        <input type="submit" value="Wijzigen">
+    </form>      
+{% endblock %}  
+

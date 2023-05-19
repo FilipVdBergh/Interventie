@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block currentstep %}
+  Daar gaat iets mis
+{% endblock %}
+
+
+
+
+{% block body %}
+<h1>{{ melding }}</h1>
+{{ tekst }}
+<br><br>
+<button onclick="goBack()">Terug</button>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+{% endblock %}  
+

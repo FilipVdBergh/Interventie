@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+
+{% endblock %}
+
+{% block currentstep %}
+    {{ instrument.naam }}
+{% endblock %}
+
+{% block instrumenten %}
+    {% for instrument in instrumenten %}
+        <a href="{{ url_for('instrument', id=instrument.id ) }}" class="instrument">{{ instrument.naam }}</a>
+    {% endfor %}
+    <br>
+    {% if current_user.role == 1 %}
+        <a href="{{ url_for('add_instrument') }}" class="instrument">+ Instrument toevoegen</a>
+    {% endif %}
+    <a href="{{ url_for('export_all_instruments') }}" class="instrument">Exporteer catalogus naar Word</a>
+{% endblock %}
+
+{% block body %}
+    <p class="instrumentIntro first">{{ instrument.intro | safe}}</p>
+    <h1>Wanneer te gebruiken</h1>
+    <p class="instrumentAlinea">{{ instrument.beschrijving | safe}}</p>
+    <h1>Overwegingen bij gebruik</h1>
+    <p class="instrumentAlinea">{{ instrument.afwegingen | safe}}</p>
+    <h1>Voorbeelden van projecten</h1>
+    <p class="instrumentAlinea">{{ instrument.voorbeelden | safe}}</p>
+    <h1>Links naar documentatie</h1>
+    <p class="instrumentAlinea">{{ instrument.links | safe}}</p>
+    <h1>Tags</h1>
+        <h2>Tags van toepassing op dit instrument</h2>
+        {% for tag in instrument.tags %}
+            <span class="tag plus">{{ tag.naam }}</span>
+        {% endfor %}
+        <h2>Tags die dit instrument uitsluiten</h2>
+        {% for tag in instrument.extags %}
+            <span class="tag min">{{ tag.naam }}</span>
+        {% endfor %}
+    <h1>Acties</h1>
+    <ul>
+        <li><a href="mailto:{{ instrument.eigenaar_email }}">Neem contact op met de eigenaar van dit instrument ({{ instrument.eigenaar }})</a></li>
+        <li><a href="{{ url_for('export_instrument_word', instrument_id=instrument.id) }}">Exporteer instrument naar Word</a></li>
+        {% if current_user.role == 1 %}
+            <li><a href="/instrument_update/{{ instrument.id }}">Teksten wijzigen</a></li>
+            <li><a href="/instrument_tags/{{ instrument.id }}">Tags wijzigen</a></li>
+            <br>
+            <li><a href="#" onclick="verwijder();return false">Verwijderen</a></li>
+            
+            <script>
+                function verwijder() {
+                    var doc;
+                    var result = confirm("Instrument verwijderen?");
+                    if (result == true) { window.location.href = "/instrument_delete/{{ instrument.id }}" } 
+                }
+            </script>
+        {% endif %}
+    </ul>
+    <form method="POST">
+    </form>
+{% endblock %}  
+

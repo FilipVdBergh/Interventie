@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+{% endblock %}
+
+{% block currentstep %}
+    Optie van de vraag "{{ vraag.naam }}" toevoegen of wijzigen
+{% endblock %}
+
+{% block instrumenten %}
+{% endblock %}
+
+{% block body %}
+    <form  method="POST">
+        <input type="text" name="Optie" id="naam" value="{{ optie.naam }}" size="100%">
+        <input type="submit" value="Bevestigen">
+    </form>    
+{% endblock %}  
+

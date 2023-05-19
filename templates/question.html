@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+
+{% endblock %}
+
+{% block currentstep %}
+    Antwoordopties bij vraag "{{ vraag.naam }}""
+{% endblock %}
+
+{% block instrumenten %}
+    <a href="{{ url_for('question_tools') }}" class="instrument">Terug naar het overzicht</a>
+    <a href="/question/{{ vraag.id }}/update" class="instrument">Vraag en categorie wijzigen</a>
+{% endblock %}
+
+{% block body %}
+    Categorie: "{{ categorie.naam }}"
+    <br><br>
+    <table>        
+        <tr>
+            <th>Antwoordopties</th>
+            <th>Tags</th>
+            <th>Acties</th>
+        </tr>
+        <tr>
+            {% for optie in vraag.opties %}
+            <td>
+                <a href="/question/{{ vraag.id }}/update_option/{{ optie.id }}">{{ optie.naam }}</a>
+            </td>
+            <td>
+                {% for tag in optie.tags %}
+                    <span class="tag">{{ tag.naam }}</span>
+                {% endfor %}
+            </td>
+            <td>
+                <a href="/question/{{ vraag.id }}/option/{{ optie.id }}/tags"><button type="button">Tags aanpassen</button></a>
+                <a href="/question/{{ vraag.id }}/delete_option/{{ optie.id }}"><button type="button">Optie verwijderen</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+        <td colspan="2">
+            <form method="POST">
+                <input type="text" name="Optie" id="naam" value="" size="75%">
+        </td>
+        <td colspan="2">
+            <input type="submit" value="Optie toevoegen">
+            </form>   
+        </td>
+    </table>
+
+{% endblock %}  
+

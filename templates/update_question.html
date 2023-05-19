@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+{% endblock %}
+
+{% block currentstep %}
+    Vraagformulering en categorie wijzigen
+{% endblock %}
+
+{% block instrumenten %}
+    <a href="{{ url_for('question_tools') }}" class="instrument">Terug naar het overzicht</a>
+    <a href="/question/{{ vraag.id }}" class="instrument">Antwoordopties wijzigen</a>
+{% endblock %}
+
+
+{% block body %}
+    <form action="/question/{{ vraag.id }}/update" method="POST">
+        <input type="text" name="Vraag" id="vraagnaam" value="{{ vraag.naam }}" size="100%"><br>
+        <select name="Categorienaam" id="categorienaam" value="{{ vraag.categorie_id }}">
+            {% for categorie in categorieen %}
+                <option value="{{categorie.naam}}">{{categorie.naam}}</option>
+            {% endfor %}
+            <br><br>
+
+            <input type="submit" name="submit_button" value="Wijzigen">
+        </select>
+    </form>   
+{% endblock %}  
+

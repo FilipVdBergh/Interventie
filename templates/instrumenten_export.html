@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% set active_page = "instrumenten_summary" %}
+
+{% block instrumenten %}
+    <h1>Export</h1>
+{% endblock %}
+
+{% block body %}
+    {% for instrument in instrumenten %}
+        <h1 class="instrumentH1">{{ instrument.naam }}</h1>
+        <p class="instrumentIntro">{{ instrument.intro | safe}}</p>
+        <h2>Wanneer te gebruiken</h2>
+        <p class="instrumentAlinea">{{ instrument.beschrijving | safe}}</p>
+        <h2>Overwegingen bij gebruik</h2>
+        <p class="instrumentAlinea">{{ instrument.afwegingen | safe}}</p>
+        <h2>Voorbeelden van projecten</h2>
+        <p class="instrumentAlinea">{{ instrument.voorbeelden | safe}}</p>
+        <h2>Links</h2>
+        <p class="instrumentAlinea">{{ instrument.links | safe}}</p>
+        <h2>Tags</h2>
+        <h3>Tags van toepassing op dit instrument</h3>
+        {% for tag in instrument.tags %}
+            <span class="tag plus">{{ tag.naam }}</span>
+        {% endfor %}
+        <h3>Tags die dit instrument uitsluiten</h3>
+        {% for tag in instrument.extags %}
+            <span class="tag min">{{ tag.naam }}</span>
+        {% endfor %}
+        <h2>Eigenaar</h2>
+        {{ instrument.eigenaar}} ({{instrument.eigenaar_email}})
+    {% endfor %}
+
+
+{% endblock %}  
+

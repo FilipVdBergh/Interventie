@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+{% endblock %}
+
+{% block currentstep %}
+    Categorienaam wijzigen
+{% endblock %}
+
+{% block instrumenten %}
+{% endblock %}
+
+{% block body %}
+    <form action="/categorie_update/{{ categorie.id }}" method="POST">
+        <input type="text" name="Categorie" id="naam" value="{{ categorie.naam }}" size="100%">
+        <input type="submit" value="Wijzigen">
+    </form>    
+{% endblock %}  
+

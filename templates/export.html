@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% set active_page = "export" %}
+
+{% block currentcase %}
+    Casus {{ werksessie.naam }}
+{% endblock %}
+
+{% block currentstep %}
+    Exporteer werksessie naar Word
+{% endblock %}
+
+{% block instrumenten %}
+    <a href="{{ url_for('export_session_word') }}" class="instrument">Exporteer sessie naar Word</a>
+{% endblock %}
+
+{% block body %}
+    <h1 class="first"> {{werksessie.naam }} </h1>
+    Datum: <b>{{ werksessie.datum }}</b><br>
+    Deelnemers: <b>{{ werksessie.auteurs }}</b>
+
+    <h1>Beoogd effect</h1>
+    Bij de start van de werksessie is met alle aanwezigen de centrale probleemstelling vastgesteld. 
+    Met de centrale probleemstelling wordt het ongewenste gedrag eenduidig verwoord. De groep heeft de volgende 
+    centrale probleemstelling vastgesteld: <br>
+    <b>{{ werksessie.probleemstelling }}</b>
+    <div class='tool' align="right">Pas aan op <a href="{{ url_for('case') }}">1: Casus</a>.</div>
+    
+    <h1>Overwegingen definitieve instrumentselectie</h1>
+    De export van de werksessie biedt aanknopingspunten voor een plan van aanpak. 
+    Beschrijf hieronder welke instrumenten relevant zijn voor deze casus en welke
+    overwegingen daarbij een rol spelen. Ook kan besloten worden niets te doen.
+    De aanpak kan gebaseerd zijn op de instrumenten die door de keuzehulp zijn
+    geprioriteerd, maar dat is niet noodzakelijk. <br>
+    <b>{{ werksessie.conclusie }}</b>
+    <div class='tool' align="right">Pas aan op <a href="{{ url_for('case') }}">3: Conclusie</a>.</div>
+    
+    <h1>Geselecteerde antwoorden</h1>
+        Hieronder volgt een opsomming van de gegeven antwoorden op de vragen.
+        <div class='tool' align="right">Pas aan op <a href="{{ url_for('questionnaire') }}">2: Keuzehulp</a>.</div>
+        {% for categorie in categorieen %}
+        <h2>{{ categorie.naam }}</h2>
+            <ol>
+                {% for vraag in categorie.vragen %}
+                    <li>{{ vraag.naam }}</li>
+                    <ul> 
+                    {% for optie in vraag.opties %}                                      
+                        {% if optie in werksessie.geselecteerde_opties %}
+                            <li>
+                                <b>{{ optie.naam }}</b>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% for motivatie in werksessie.motivaties %}
+                        {% if motivatie.vraag == vraag.id %}
+                            {{ motivatie.motivatie }}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </ol>
+        {% endfor %}
+    <h1>Actieve tags</h1>
+        {% for optie in werksessie.geselecteerde_opties %}
+            {% for tag in optie.tags %}
+                <span class="tag">{{ tag.naam }}</span>
+            {% endfor %}
+        {% endfor %}
+    <h1>Instrumenten in scope</h1>
+        <table>
+            <tr>
+                <th>Instrument</th>
+                <th>Score</th>
+                <th>Tags</th>
+            </tr>
+            {% for instrument in instrumenten %}
+                {% if instrument[1]>0 %} 
+                    <tr>                                  
+                        <td>
+                            <a href="{{ url_for('instrument', id=instrument[0].id ) }}">{{ instrument[0].naam }}</a>
+                        </td>
+                        <td>
+                            {{instrument[5]}}
+                        </td>
+                        <td>                           
+                            {% for tag in instrument[2] %}
+                                <span class='tag plus'>{{ tag.naam }}</span>
+                            {% endfor %}
+            
+                            {% for tag in instrument[4] %}
+                                <span class='tag min'>{{ tag.naam }}</span>
+                            {% endfor %}    
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+{% endblock %}

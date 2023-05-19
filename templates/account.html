@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% set active_page = "account" %}
+
+{% block currentstep %}
+    Account
+{% endblock %}
+
+{% block instrumenten %}
+
+{% endblock %}
+    
+{% block body %}
+    <h1>Acties</h1>
+    <ul>       
+        <li>
+            <form method="POST" action="">
+                <input type="hidden" name="vraag" value="change_password">
+                {{ formPassword.hidden_tag() }}
+                {{ formPassword.password }}
+                {{ formPassword.submit }}
+            </form>
+        </li>
+        <li><a href="{{ url_for('logout') }}">Uitloggen</a></li>
+    </ul>
+
+    {% if current_user.role == 1 %}
+        <h1>Gebruikers</h1>
+        <table>
+            <tr>
+                <th>Gebruiker</th>
+                <th>Rol</th>
+                <th colspan = 3>Acties</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td valign=top>
+                        {{ user.username }}
+                    </td>
+                    <td>
+                        {% if user.role == 1 %}Administrator{% endif %}
+                        {% if user.role != 1 %}Gebruiker{% endif %}
+                    </td>
+                    <td>
+                        {% if user.role == 1 %}
+                            <a href="{{ url_for('make_user', user_id=user.id) }}"><button type="button">Maak gebruiker</button></a>
+                        {% else %}
+                            <a href="{{ url_for('make_admin', user_id=user.id) }}"><button type="button">Maak administrator</button></a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <!-- <a href="{{ url_for('resetUserPassword', user_id=user.id) }}"><button type="button">Wachtwoord resetten</button></a> -->
+                        <button type="button" onclick="confirmAndGo('Wachtwoord van {{ user.username }} resetten?', &quot; {{ url_for('resetUserPassword', user_id=user.id) }} &quot;) ">Wachtwoord resetten</button>
+                    </td>
+                    <td>
+                        {% if user.role != 1 %}
+                            <!-- <a href="{{ url_for('delete_user', user_id=user.id) }}"><button type="button">Verwijderen</button></a> -->
+                            <button type="button" onclick="confirmAndGo('Gebruiker {{ user.username }} verwijderen? Deze handeling kan niet ongedaan worden gemaakt. Alle werksessies van deze gebruiker zijn alleen nog door administrators te zien.', &quot; {{ url_for('delete_user', user_id=user.id) }} &quot;) ">Verwijderen</button>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            <form method="POST" action="">
+                    {{ formRegister.hidden_tag() }}
+                <tr>
+                    <td>{{ formRegister.username }}</td>
+                    <td>{{ formRegister.password }}</td>
+                    <td colspan="3">{{ formRegister.submit }}</td>
+                </tr>
+            </form>
+        </table>
+ 
+
+    {% endif %}
+
+    <script>
+        function confirmAndGo(message, route) {
+            if (confirm(message)) {
+                window.location.href=route        
+            }
+        }
+
+    </script>
+
+
+{% endblock %}  

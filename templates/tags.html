@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+    
+{% endblock %}
+
+{% block currentstep %}
+    Tags verwijderen of wijzigen
+{% endblock %}
+
+{% block instrumenten %}
+    <a href="{{ url_for('question_tools') }}" class="instrument">Terug naar het overzicht</a>
+{% endblock %}
+
+{% block body %}
+    Verwijder tags of geef ze een andere naam. Wijs tags toe aan instrumenten vanuit de catalogus. Wijs tags toe aan antwoordopties door de keuzehulp aan te passen.<br><br>
+    <table>
+        <tr>
+            <th>Tag</th>
+            <th>Acties</th>
+        </tr>
+        {% for tag in tags %}
+        <tr>
+            <td><span class="tag">{{ tag.naam }}</span></td>
+            <td>
+                <a href="/tag_update/{{ tag.id }}"><button type="button">Wijzigen</button></a>
+                <button onclick="verwijder();return false">Verwijderen</button>
+                
+                <script>
+                    function verwijder() {
+                        var doc;
+                        var result = confirm("Tag verwijderen?");
+                        if (result == true) { window.location.href = "/tag_delete/{{ tag.id }}" } 
+                    }
+                </script>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h2>Tag toevoegen</h1>
+    <form action="/tags" method="POST">
+        <input type="text" name="Tag" id="naam" size="100%">
+        <input type="submit" value="Tag toevoegen">
+    </form>    
+{% endblock %}  
+

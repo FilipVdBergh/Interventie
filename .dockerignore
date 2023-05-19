@@ -1,0 +1,6 @@
+.git
+__pycache__
+archive
+*.tar
+notes.txt
+build_container.bat

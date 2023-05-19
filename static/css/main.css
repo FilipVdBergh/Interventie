@@ -1,0 +1,408 @@
+html,body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0px;
+    margin: 0px;
+}
+
+a {
+    color: green;
+    text-decoration: inherit; 
+}
+
+h1 {
+    padding-top: 10px;
+    font-size: x-large;
+    font-weight: lighter;
+}
+
+h2 {
+    font-size: large;
+    font-weight: lighter;
+}
+
+h3 {
+    font-style: italic;
+}
+
+.first { 
+    margin-top: 0 !important; 
+}
+
+.no_emph {
+    font-size: smaller;
+    color: grey;
+}
+
+table {
+    width:100%;
+    border-bottom: solid 1px #44546A;
+}
+
+th {
+    color: black;
+    border-bottom: solid 1px #44546A;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: normal;
+    color: #59738E;
+    font-size: x-small;
+}
+
+td {
+    text-align: left;
+    padding-right: 10px;
+    border-bottom: solid 1px #EEEEEE;
+    vertical-align: top;
+}
+
+.divtop {
+    display: block;
+    grid-template-columns: max-content auto;
+    padding-left: 15px;
+    padding-right: 35px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #F7FAFC;
+    color: 091e31;
+    font-size: x-large;
+}
+
+.divnav {
+    display: block;
+    color: #d7d7d7;
+    background-color: #091e31;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    font-size: x-small;
+}
+
+.case_name {
+    font-weight: bold;
+    padding-right: 20px;
+    padding-left: 20px;
+    color: #dbdbdb
+}
+
+.nav {
+    padding-right: 20px;
+    padding-left: 20px;
+    color: #dbdbdb
+}
+
+.nav:hover {
+    background-color: #59738E;
+    color: #FFFFFF;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.divtoolbar {
+    background-color: #F7FAFC;
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-template-rows: max-content max-content;
+}
+
+.tool {       
+    font-size: smaller;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-decoration-line: none;
+}
+
+.divlogo {
+    grid-row: 1 / 3;
+    padding: 20px;
+}
+
+.divsteps {   
+    padding-right: 25px;
+    padding-bottom: 10px;
+    color: #111111;
+    text-decoration: none;
+}
+
+.step {
+    font-size: smaller;
+    padding-right: 25px;
+}
+
+.step:hover {
+    text-decoration: underline;
+}
+
+.divcurrentstep {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size:xx-large;
+    font-weight: lighter;
+}
+
+.divmain {
+    margin-top: 25px;
+    margin-bottom: 50px;
+    display:grid;
+    grid-template-columns: 300px  auto;
+    background-color:white;
+}
+
+.divinstrumenten {  
+    display:block;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.divworkarea { 
+    background-color: white;
+    max-width: 800px;
+    margin-left: 25px;
+}
+
+/* Opmaak instrumenten */
+.instrument {
+    display: block;
+    color: black;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-decoration: none;
+    font-size: small;
+}
+
+.instrument:hover {
+    background-color: #DDDDDD;
+}
+
+.prio_hi {
+    font-weight: bold;
+    color: darkblue;
+}
+
+.prio_mid {
+    color: darkblue;
+}
+
+.prio_lo {
+    color: darkgrey;
+}
+
+/* Opmaak werksessies */
+.werksessie {
+    display: block;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-decoration: none;
+    font-size: small;
+}
+
+.werksessie:hover {
+    background-color: #DDDDDD;
+}
+
+.owned_by_other {
+    color: darkgrey;
+}
+
+.owned_by_me {
+    color: black
+}
+
+.active_session {
+    background-color: #BBBBBB;
+    color: #111111;
+}
+
+
+.current {
+    font-weight: bold;
+}
+
+
+
+.tag {   
+    font-family: 'Courier New', Courier, monospace;
+    font-size: smaller;
+    color:grey;
+    padding-left: 10px;
+    padding-right: 10px;
+    border:1px solid lightgrey;
+    white-space:nowrap;
+}
+
+.plus {
+    font-weight: bold;
+    color:darkblue;
+}
+
+.plus::before {
+    content: '+';
+}
+
+.min {
+    font-weight: bold;
+    color:red;
+}
+
+.min::before {
+    content: '-';
+}
+
+
+
+
+/* Opmaak van de instrumenten */
+
+.instrumentIntro {
+    font-weight: bold;
+}
+
+.databaseId {
+    font-size: smaller;
+    color: darkgrey;
+}
+
+.text_input {
+    width: 90%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;    
+}
+
+.text_field {
+    width: 90%;
+    height: 150px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.vraag {
+    font-size: 14pt;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.switched {
+    color: black;
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 10px;   
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+}
+.on {
+    background-color: green;
+    color: white;
+}
+.off {
+    color: black;
+}
+
+.question {  
+    border-top: solid 1px white;
+}
+
+.extendtags {
+    background-color: #fafafa;
+}
+
+.collapsible_content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.collapsible {
+    cursor: pointer;
+    display: inline;
+    border: none;
+    text-align: left;
+    outline: none;
+    width:100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.active, .collapsible:hover {
+    background-color: #65c7ff;
+    color: white;
+  }
+
+.collapsible:before {
+    content: "🡢"; 
+    color: darkkhaki;
+    float: left;
+    margin-right: 5px;
+  }
+  
+.active:before {
+    content: "🡣"; 
+    color: white;
+  }
+
+.option {
+    text-decoration: none;
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+.option:before {
+    content: '\2B24';
+    padding-right: 5px;
+}
+
+.option:hover {
+    text-decoration: underline;
+}
+
+.option_selected {
+    color:black;
+}
+
+.option_unselected {
+    color:rgb(179, 179, 179);
+}
+
+.answer {
+    font-weight: bolder;
+    font-style: italic;
+    color: darkblue;
+    text-decoration: underline;
+}
+
+.answer:before {
+    content: '\1F892';
+    padding-right: 5px;
+}
+
+.hits {
+    color: darkgrey;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: #65c7ff;
+    color: white;
+    text-align: left;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -50px;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 16%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #65c7ff transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }

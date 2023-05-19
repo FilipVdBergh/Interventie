@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block currentcase %}
+{% endblock %}
+
+{% block currentstep %}
+    Tags wijzigen van {{ instrument.naam }} wijzigen
+{% endblock %}
+
+{% block instrumenten %}
+<p>Geef aan welke tags van toepassing zijn op het instrument, en welke tags toepassing van het instrument juist minder geschikt maken.</p>
+    <p>Als je een tag die nog niet bestaat aan een instrument wilt koppelen, dan moet je die eerst toevoegen. Kies daarvoor
+        <a href="{{ url_for('tags') }}">Wijzig tags</a>. Daarna kan je de tag toevoegen aan het instrument.</p>
+{% endblock %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>Tag</th>
+            <th>Status</th>
+        </tr>
+        {% for tag in tags %}
+        <tr>
+            <td>
+                {% if tag[2] %}
+                    <span class="tag plus">{{ tag[1] }}</span>
+                {% elif tag[3] %}
+                    <span class="tag min">{{ tag[1] }}</span>
+                {% else %}
+                    <span class="tag">{{ tag[1] }}</span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="/add_instrument_tags/{{ instrument.id }}/tag/{{ tag[0] }}" class="plus switched">Tag</a>
+                <a href="/add_instrument_extags/{{ instrument.id }}/tag/{{ tag[0] }}" class="min switched">Tag</a>
+                <a href="/delete_instrument_tags/{{ instrument.id }}/tag/{{ tag[0] }}" class="switched">Maak inactief</a>
+                
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/instrument/{{ instrument.id }}">Terug naar "{{ instrument.naam }}"</a><br>
+{% endblock %}  
+

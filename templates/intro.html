@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% set active_page = "intro" %}
+
+{% block currentcase %}
+    {% if werksessie is not none %}
+        Casus {{ werksessie.naam }}
+    {% else %}
+        Geen werksessie geselecteerd
+    {% endif %}
+{% endblock %}
+
+{% block currentstep %}
+    Start en selectie werksessie
+{% endblock %}
+
+{% block instrumenten %}
+<h1 class="first">Werksessies</h1>
+    {% if current_user.is_authenticated %} 
+            {% for ws in werksessies %}
+                {% if current_user.id == ws.owner %}
+                    <div class="tooltip">
+                            <a href="{{ url_for('activate_session', sessie_id = ws.id) }}" 
+                                {% if ws.id == actieve_werksessie %}
+                                    class='werksessie owned_by_me active_session'
+                                {% endif %}
+                                class='werksessie owned_by_me'>
+                                {{ ws.naam }}
+                            </a>              
+                        <span class="tooltiptext">
+                            <strong>U bent de eigenaar</strong><br>
+                            {{ ws.probleemstelling }}<br>
+                            Deelnemers: {{ ws.auteurs }}<br>
+                            Datum: {{ ws.datum }}
+                        <span>
+                    </div>
+                {% endif %}
+            {% endfor %}    
+            {% for ws in werksessies %}
+                {% if current_user.id != ws.owner %}
+                    <div class='tooltip'>
+                            <a href="{{ url_for('activate_session', sessie_id = ws.id) }}" 
+                                {% if ws.id == actieve_werksessie %}
+                                    class="werksessie owned_by_other active_session"
+                                {% else %}
+                                    class="werksessie owned_by_other"
+                                {% endif %}
+                                >
+                                {{ ws.naam }}
+                            </a>   
+                        <span class="tooltiptext">
+                            {{ ws.probleemstelling }}<br>
+                            Deelnemers: {{ ws.auteurs }}<br>
+                            Datum: {{ ws.datum }}
+                        <span>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        <a href="{{ url_for('add_session') }}" class="instrument">+ Werksessie toevoegen</a>
+        {% endif %}  
+{% endblock %}
+
+{% block body %}
+<h1 class="first">Doel</h1>
+Deze tool ondersteunt toezichthouders bij het gezamenlijk kiezen van de
+meest passende interventie(s). De tool bestaat uit een keuzehulp en een catalogus met de
+beschrijving van alle instrumenten. Je doorloopt de keuzehulp op het moment dat je een
+beeld hebt van het ongewenste gedrag waarvan de AFM wil dat het stopt. De instrumenten zijn 
+gericht op het grondig aanpakken van risico's, de derde stap in de toezichtscyclus.
+
+<h1>Hoe het werkt</h1>
+Je doorloopt de keuzehulp met een groep mensen met kennis van de casus. 
+De keuzehulp helpt de groep overwegingen expliciet te maken en een passende interventie te kiezen. 
+Het is aan te raden om deze sessie te laten begeleiden door een onafhankelijke facilitator. 
+Kun je daar hulp bij gebruiken? Neem dan contact op met <a href='mailto:{{ maintainer_email }}'>{{ maintainer }}</a>.
+
+<h1>Wat het oplevert</h1>
+Gebruik van de keuzehulp levert je een lijstje met interventies 
+op die passend kunnen zijn voor de casus, gebaseerd op de gekozen antwoordopties. 
+Alle instrumenten zijn bondig beschreven, met afwegingen en voorbeelden die toezichthouders kunnen 
+helpen om het instrument goed in te zetten. Het team bespreekt deze instrumenten met elkaar en weegt af 
+welke instrumenten relevant zijn voor hun doel. 
+
+<h1>Goed om te weten bij gebruik van de keuzehulp</h1>
+<ul>
+    <li>
+        In stap 1 legt het team vast waar de toezichtscasus over gaat. In deze stap legt het team ook de 
+        centrale probleemstelling vast. Dit helpt het team om scherp te bepalen welk ongewenst gedrag moet worden beëindigd.
+    </li>
+    <li>
+        In stap 2 beantwoordt het team vragen over de casus. Om de vragen te beantwoorden moet het team scherp 
+        discussieren over de casus. De werkelijkheid zal vaak genuanceerder zijn dan de mogelijke antwordopties. 
+        Kies het antwoord dat het meest passend is bij de casus. 
+        Geen enkele vraag is verplicht en de volgorde is ook vrij. Als je geen antwoord op een vraag kunt of wilt geven, 
+        sla de vraag dan over. Hoe meer vragen je invult, hoe specifieker de selectie van instrumenten. 
+    </li>
+    <li>
+        In stap 3 legt het team de definitieve overwegingen vast. De tool
+        geeft suggesties voor interventies, maar de toezichthouders blijven verantwoordelijk voor de uiteindelijke keuzes.
+        Ook is een mix van verschillende interventies mogelijk.
+    </li>
+    <li>
+        De samenvatting geeft een overzicht van de
+        gekozen antwoordopties, de relevante instrumenten en eventuele tekstuele onderbouwing. 
+        Exporteer hier alle gegeven antwoorden naar Word. Deze export kan gebruikt worden in een interventieplan. 
+    </li>
+    <li>
+        Druk op Fn+F11 om de tool op volledig scherm weer te geven.
+    </li>
+</ul>
+<h1>Contact</h1>
+Voor vragen en suggesties neem contact op met <a href='mailto:{{ maintainer_email }}'>{{ maintainer }}</a>.
+{% endblock %}  
+

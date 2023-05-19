@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% set active_page = "question_tools" %}
+
+{% block currentcase %}
+    
+{% endblock %}
+
+{% block currentstep %}
+    Keuzehulp aanpassen
+{% endblock %}
+
+{% block body %}
+    <h1>Tags wijzigen</h1>
+    <a href="{{ url_for('tags') }}">Tags aanpassen</a>
+    <h1>Keuzehulpvragen wijzigen</h1>
+    {% for categorie in categorieen %}
+        <h2>Categorie: {{ categorie.naam }}</h2>       
+        {% for vraag in categorie.vragen %}   
+            <button type="button" class="collapsible question"><h3 style='display:inline'>{{ vraag.naam }}</h3></button>
+            <div class="collapsible_content question">
+                
+                <table>
+                    <tr>
+                        <th>Antwoordoptie {% if vraag.multiselect %}(meer dan één antwoord toegestaan){% endif %}</th>
+                        <th>Tags</th>
+                    </tr>
+                    {% for optie in vraag.opties %}
+                    <tr>
+                        <td><a href="/question/{{ vraag.id }}/option/{{ optie.id }}/tags">{{ optie.naam }}</a></td>
+                        <td>
+                            {% for tag in optie.tags %}
+                                {% if not tag=='' %}
+                                    <span class="tag">
+                                        {{ tag.naam }} 
+                                    </span>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <ul>
+                    <li>
+                        {% if vraag.multiselect %}
+                            <a href="{{ url_for('toggle_multiselect', vraag_id=vraag.id, enabled=0) }}">Altijd maar één antwoord toestaan</a>
+                        {% else %}
+                            <a href="{{ url_for('toggle_multiselect', vraag_id=vraag.id, enabled=1) }}">Meer dan één antwoord toestaan</a>
+                        {% endif %}
+                    </li>
+                    <li><a href="/question/{{ vraag.id }}/update">Vraagformulering en categorie wijzigen</a></li>
+                    <li><a href="/question/{{vraag.id}}">Antwoordopties wijzigen</a></li>
+                    <li><a href="#" onclick="verwijder();return false">Verwijderen</a></li>
+            
+                    <script>
+                        function verwijder() {
+                            var doc;
+                            var result = confirm("Vraag verwijderen?");
+                            if (result == true) { window.location.href = "/question/{{ vraag.id }}/delete" } 
+                        }
+                    </script>
+
+                </ul>
+            <br>
+            </div>
+        {% endfor %}
+    
+    {% endfor %}
+    <h1>Nieuwe keuzehulpvraag toevoegen</h1>
+        <form action="/question_tools" method="POST">
+            <input type="text" name="Vraag" id="vraagnaam" size="100%"><br>
+            <select name="Categorienaam" id="categorienaam">
+                {% for categorie in categorieen %}
+                    <option value="{{categorie.naam}}">{{categorie.naam}}</option>
+                {% endfor %}
+                <input type="submit" name="submit_button" value="Vraag toevoegen">
+            </select>
+        </form>
+    <h1>Categorieën</h1>
+    <button type="button" class="collapsible"><h3 style='display:inline'>Alle categorieën</h3></button>
+        <div class="collapsible_content">
+            <table>
+                <tr>
+                    <th>Categorie</th>
+                    <th>Acties</th>
+                </tr>
+                {% for categorie in categorieen %}
+                <tr>
+                    <td>{{ categorie.naam }}</td>
+                    <td>
+                        <a href="/categorie_update/{{ categorie.id }}"><button type="button">Wijzigen</button></a>
+                        <button onclick="verwijdercategorie();return false">Verwijderen</button>
+                
+                            <script>
+                                function verwijdercategorie() {
+                                    var doc;
+                                    var result = confirm("Categorie verwijderen?");
+                                    if (result == true) { window.location.href = "/categorie_delete/{{ categorie.id }}" } 
+                                }
+                            </script>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <br>
+        </div>
+    <button type="button" class="collapsible"><h3 style='display:inline'>Nieuwe categorie toevoegen</h3></button>
+        <div class="collapsible_content">
+            <form action="/question_tools" method="POST">
+                <input type="text" name="Categorie" id="naam" size="100%">
+                <input type="submit" name="submit_button" value="Categorie toevoegen">
+            </form> 
+            <br> 
+        </div>
+{% endblock %}  
+

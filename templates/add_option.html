@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>Optie van de vraag <i>{{ vraag.naam }}</i> toevoegen of wijzigen</h1>
+    <ul>
+        {% for optie in vraag.opties %}
+        <li>{{ optie.naam }} ( {{optie.tags}})</li>
+        {% endfor %} 
+    </ul>
+    <form method="POST">
+        <input type="text" name="Optie" id="naam" value="">
+        <input type="submit" value="Bevestigen">
+    </form>    
+{% endblock %}  
+

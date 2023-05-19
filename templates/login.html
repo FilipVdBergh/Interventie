@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% set active_page = "login" %}
+
+{% block currentcase %}
+    Welkom op interventie.afm.nl
+{% endblock %}
+
+{% block currentstep %}
+    Welkom op interventie.afm.nl
+{% endblock %}
+
+{% block instrumenten %}
+{% endblock %}
+
+{% block body %}
+Deze tool ondersteunt toezichthouders bij het gezamenlijk kiezen van de
+meest passende interventie(s). De tool bestaat uit een keuzehulp en een catalogus met de
+beschrijving van alle instrumenten. Je doorloopt de keuzehulp op het moment dat je een
+beeld hebt van het ongewenste gedrag waarvan de AFM wil dat het stopt. De instrumenten zijn 
+gericht op het grondig aanpakken van risico's, de derde stap in de toezichtscyclus.
+<h1>Log in om te beginnen</h1>
+
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    {{ form.username }}
+    {{ form.password }}
+    {{ form.submit }}
+</form>
+<br>
+Heb je geen account en wil je zelf rondkijken in de tool om eenpassende interventie te vinden? 
+Of ben je op zoek naar iemand die een interventiesessie wil faciliteren? Neem dan contact op met 
+<a href='mailto:{{ maintainer_email }}'>{{ maintainer }}</a>.
+{% endblock %}    
