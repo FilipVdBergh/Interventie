@@ -83,7 +83,7 @@
                             <br>
                         {% endfor %}
                         Motivatie:<br>
-                        <textarea id="{{ vraag.id }}" name="motivatie" class="text_field">{% for motivatie in werksessie.motivaties %}{% if motivatie.vraag == vraag.id %}{{ motivatie.motivatie }}{% endif %}{% endfor %}</textarea>
+                        <textarea id="{{ vraag.id }}" name="motivatie" class="text_field" maxlength="499">{% for motivatie in werksessie.motivaties %}{% if motivatie.vraag == vraag.id %}{{ motivatie.motivatie }}{% endif %}{% endfor %}</textarea>
                         <br><input type="submit" value="Opslaan"><br><br>
                     </form>
                 </div>

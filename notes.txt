@@ -26,7 +26,7 @@ Set-ExecutionPolicy Unrestricted -Scope Process
 .\venv\Scripts\activate.ps1
 $env:SQL_USER = 'root'
 $env:SQL_PASSWORD = 'pgnInterventie2021LvG.'
-$env:SQL_HOST = '192.168.178.4'
+$env:SQL_HOST = '192.168.2.101'
 $env:SQL_DB = 'interventie'
 $env:SQL_PORT = '3306'
 $env:SERVER_TYPE = 'mysql'
